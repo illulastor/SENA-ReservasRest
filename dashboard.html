@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reserva Rest · Panel</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+</head>
+<body>
+  <div id="app-shell" class="app-shell">
+    <div id="sidebar-scrim" class="sidebar-scrim"></div>
+
+    <!-- ===== Sidebar ===== -->
+    <aside class="sidebar">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M7 2h10l-1 8a4 4 0 0 1-8 0L7 2z" stroke="#C9A227" stroke-width="1.4" stroke-linejoin="round"/>
+          <path d="M12 14v6M9 20h6" stroke="#C9A227" stroke-width="1.4" stroke-linecap="round"/>
+        </svg>
+        <span>Reserva Rest</span>
+      </div>
+      <ul id="nav-list" class="nav-list"></ul>
+      <div class="sidebar-footer"><span>Reserva Rest · Panel interno</span></div>
+    </aside>
+
+    <div>
+      <!-- ===== Topbar ===== -->
+      <header class="topbar">
+        <div class="left">
+          <button id="sidebar-toggle" aria-label="Mostrar u ocultar menú">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </button>
+          <h1 id="view-title">Inicio</h1>
+        </div>
+        <div class="right">
+          <div class="user-chip">
+            <span id="current-username">—</span>
+            <span id="current-role" class="role-badge">—</span>
+          </div>
+          <button id="logout-btn" class="btn btn-outline btn-sm">Salir</button>
+        </div>
+      </header>
+
+      <!-- ===== Contenido ===== -->
+      <main class="content">
+
+        <!-- Vista: Inicio -->
+        <section id="view-inicio" class="view">
+          <div class="view-header">
+            <h2>Panel general</h2>
+            <p>Resumen de la operación de hoy.</p>
+          </div>
+          <div id="stats-grid" class="stats-grid"></div>
+
+          <div class="panel">
+            <div class="panel-header"><h3 style="margin:0;">Mesas</h3></div>
+            <div id="home-tables-grid" class="tables-grid"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header"><h3 style="margin:0;">Reservas activas</h3></div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Cliente</th><th>Mesa</th><th>Hora</th><th>Personas</th><th>Platos</th><th>Precio</th></tr></thead>
+                <tbody id="home-reservations-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Vista: Mesas -->
+        <section id="view-mesas" class="view">
+          <div class="view-header">
+            <h2>Gestión de mesas</h2>
+            <p>Crea, edita y controla el estado de las mesas del salón.</p>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3 style="margin:0;">Listado de mesas</h3>
+              <button id="tables-new-btn" class="btn btn-primary">+ Nueva mesa</button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>ID</th><th>Nombre</th><th>Capacidad</th><th>Zona</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody id="tables-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Vista: Reservas -->
+        <section id="view-reservas" class="view">
+          <div class="view-header">
+            <h2>Reservas</h2>
+            <p>Las reservas más próximas se muestran primero.</p>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3 style="margin:0;">Reservas</h3>
+              <button id="reservations-new-btn" class="btn btn-primary">+ Nueva reserva</button>
+            </div>
+            <div id="reservations-grid" class="reservations-grid"></div>
+          </div>
+        </section>
+
+        <!-- Vista: Pedidos y platos -->
+        <section id="view-pedidos" class="view">
+          <div class="view-header">
+            <h2>Pedidos y platos</h2>
+            <p>Crea pedidos por mesa y administra el catálogo de platos.</p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3 style="margin:0;">Pedidos</h3>
+              <button id="orders-new-btn" class="btn btn-primary">+ Nuevo pedido</button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Mesa</th><th>Platos</th><th>Total</th><th>Acciones</th></tr></thead>
+                <tbody id="orders-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h3 style="margin:0;">Catálogo de platos</h3>
+              <button id="dishes-new-btn" class="btn btn-gold">+ Nuevo plato</button>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Nombre</th><th>Descripción</th><th>Precio</th><th>Acciones</th></tr></thead>
+                <tbody id="dishes-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Vista: Cocina -->
+        <section id="view-cocina" class="view">
+          <div class="view-header">
+            <h2>Cocina</h2>
+            <p>Avanza el estado de cada plato: pendiente → preparando → listo.</p>
+          </div>
+          <div class="panel">
+            <div id="kitchen-list"></div>
+          </div>
+        </section>
+
+        <!-- Vista: Despachos -->
+        <section id="view-despacho" class="view">
+          <div class="view-header">
+            <h2>Despachos</h2>
+            <p>Crea despachos con los platos listos y actualiza su recorrido.</p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header"><h3 style="margin:0;">Platos listos para despachar</h3></div>
+            <div id="dispatch-pending"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header"><h3 style="margin:0;">Despachos</h3></div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Mesa</th><th>Platos</th><th>Estado</th><th>Acción</th></tr></thead>
+                <tbody id="dispatch-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Vista: Usuarios -->
+        <section id="view-usuarios" class="view">
+          <div class="view-header">
+            <h2>Usuarios</h2>
+            <p>Administra las cuentas de acceso al sistema.</p>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <h3 style="margin:0;">Listado de usuarios</h3>
+              <div style="display:flex; gap:8px;">
+                <button id="users-reset-btn" class="btn btn-outline">Restablecer datos demo</button>
+                <button id="users-new-btn" class="btn btn-primary">+ Nuevo usuario</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table class="data-table">
+                <thead><tr><th>Usuario</th><th>Rol</th><th>Acciones</th></tr></thead>
+                <tbody id="users-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+
+  <!-- ===== Núcleo (orden importa) ===== -->
+  <script src="js/config.js"></script>
+  <script src="js/security.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/session.js"></script>
+  <script src="js/ui.js"></script>
+  <script src="js/bootstrap.js"></script>
+
+  <!-- ===== Módulos de vista ===== -->
+  <script src="js/modules/shared.js"></script>
+  <script src="js/router.js"></script>
+  <script src="js/modules/dashboard.module.js"></script>
+  <script src="js/modules/tables.module.js"></script>
+  <script src="js/modules/reservations.module.js"></script>
+  <script src="js/modules/orders.module.js"></script>
+  <script src="js/modules/kitchen.module.js"></script>
+  <script src="js/modules/dispatch.module.js"></script>
+  <script src="js/modules/users.module.js"></script>
+
+  <!-- ===== Arranque ===== -->
+  <script src="js/main-dashboard.js"></script>
+</body>
+</html>

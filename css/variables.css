@@ -1,0 +1,70 @@
+/* ============================================================
+   variables.css
+   Tokens de diseño globales para "Reserva Rest".
+   Todo color/tipografía/espaciado usado en el resto de los
+   archivos CSS debe salir de aquí. Así, si el negocio pide
+   cambiar la paleta, se edita un solo archivo.
+   ============================================================ */
+
+:root {
+  /* --- Paleta vineria --- */
+  --color-vino: #722f37;
+  --color-vino-oscuro: #4d1f24;
+  --color-vino-claro: #9a4750;
+  --color-dorado: #c9a227;
+  --color-dorado-claro: #e8c96a;
+  --color-crema: #faf6ee;
+  --color-crema-oscuro: #f0e6d2;
+  --color-carbon: #2b2320;
+  --color-texto: #362a25;
+  --color-texto-suave: #6f5f56;
+
+  /* --- Estados de mesas / pedidos --- */
+  --color-disponible: #4c7a4c;
+  --color-reservada: #c9a227;
+  --color-ocupada: #a4373a;
+  --color-pendiente: #a4373a;
+  --color-preparando: #c9a227;
+  --color-listo: #4c7a4c;
+
+  /* --- Feedback --- */
+  --color-exito: #3f7d4a;
+  --color-error: #b3332f;
+  --color-info: #3a6ea5;
+  --color-advertencia: #c9a227;
+
+  /* --- Tipografía --- */
+  --font-display: "Playfair Display", "Georgia", serif;
+  --font-body: "Inter", "Segoe UI", sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.5rem;
+  --fs-xl: 2rem;
+  --fs-xxl: 2.75rem;
+
+  /* --- Espaciado --- */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+
+  /* --- Bordes / sombras --- */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 2px 6px rgba(43, 35, 32, 0.08);
+  --shadow-md: 0 8px 24px rgba(43, 35, 32, 0.14);
+  --shadow-vino: 0 10px 30px rgba(114, 47, 55, 0.25);
+
+  /* --- Layout --- */
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 72px;
+  --topbar-height: 64px;
+  --transition-base: 200ms ease;
+}

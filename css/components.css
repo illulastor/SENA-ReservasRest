@@ -1,0 +1,184 @@
+/* ============================================================
+   components.css
+   Componentes de UI reutilizables en todo el dashboard:
+   toasts, modales, tablas, badges de estado, tarjetas de stats,
+   grilla de mesas.
+   ============================================================ */
+
+/* --- Toasts --- */
+#toast-container {
+  position: fixed;
+  bottom: var(--space-5);
+  right: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  z-index: 1000;
+}
+.toast {
+  min-width: 260px;
+  max-width: 360px;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-sm);
+  color: #fff;
+  box-shadow: var(--shadow-md);
+  font-size: var(--fs-sm);
+  animation: toast-in 200ms ease;
+}
+.toast-success { background: var(--color-exito); }
+.toast-error { background: var(--color-error); }
+.toast-info { background: var(--color-info); }
+.toast-warning { background: var(--color-advertencia); color: var(--color-vino-oscuro); }
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Modal --- */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(43, 35, 32, 0.55);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 900;
+  padding: var(--space-4);
+}
+.modal-box {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-6);
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-md);
+}
+.modal-box h3 { margin-bottom: var(--space-4); }
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+/* --- Badges de estado --- */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px var(--space-3);
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+.badge-disponible { background: rgba(76, 122, 76, 0.15); color: var(--color-disponible); }
+.badge-reservada { background: rgba(201, 162, 39, 0.18); color: #8a6c14; }
+.badge-ocupada { background: rgba(164, 55, 58, 0.15); color: var(--color-ocupada); }
+.badge-pending, .badge-pendiente { background: rgba(164, 55, 58, 0.15); color: var(--color-pendiente); }
+.badge-preparing, .badge-preparando { background: rgba(201, 162, 39, 0.18); color: #8a6c14; }
+.badge-ready, .badge-listo { background: rgba(76, 122, 76, 0.15); color: var(--color-listo); }
+.badge-in_route { background: rgba(58, 110, 165, 0.15); color: var(--color-info); }
+.badge-delivered { background: rgba(76, 122, 76, 0.15); color: var(--color-listo); }
+
+/* --- Tabla --- */
+.table-wrap { overflow-x: auto; border-radius: var(--radius-md); box-shadow: var(--shadow-sm); }
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: var(--fs-sm);
+}
+table.data-table th {
+  background: var(--color-vino-oscuro);
+  color: var(--color-crema);
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  font-weight: 600;
+}
+table.data-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-crema-oscuro);
+}
+table.data-table tbody tr:hover { background: var(--color-crema); }
+table.data-table td.actions { display: flex; gap: var(--space-2); }
+.table-empty { padding: var(--space-6); text-align: center; color: var(--color-texto-suave); }
+
+/* --- Tarjetas de estadística --- */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.stat-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  border-left: 4px solid var(--color-dorado);
+}
+.stat-card .stat-value {
+  font-family: var(--font-display);
+  font-size: var(--fs-xxl);
+  color: var(--color-vino);
+  line-height: 1;
+}
+.stat-card .stat-label {
+  font-size: var(--fs-sm);
+  color: var(--color-texto-suave);
+  margin-top: var(--space-2);
+}
+
+/* --- Grilla de mesas --- */
+.tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--space-4);
+}
+.table-tile {
+  aspect-ratio: 1;
+  border-radius: var(--radius-md);
+  border: none;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  transition: transform var(--transition-base);
+}
+.table-tile:hover { transform: translateY(-3px); }
+.table-tile.state-available { background: var(--color-disponible); }
+.table-tile.state-reserved { background: var(--color-reservada); color: var(--color-vino-oscuro); }
+.table-tile.state-occupied { background: var(--color-ocupada); }
+.table-tile small { font-weight: 400; font-size: var(--fs-xs); opacity: 0.9; }
+
+/* --- Panel/card genérica --- */
+.panel {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: var(--space-5);
+}
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-4);
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* --- Chip de cantidad en pedidos --- */
+.qty-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: var(--color-crema);
+  border-radius: 999px;
+  padding: var(--space-1) var(--space-3);
+}

@@ -1,0 +1,615 @@
+/* ============================================================
+   dashboard.css
+   Layout del panel principal: topbar, sidebar colapsable,
+   contenedor de vistas dinámicas.
+   FULLY RESPONSIVE - Mobile First
+   ============================================================ */
+
+/* --- Variables responsive --- */
+:root {
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 72px;
+  --topbar-height: 64px;
+  
+  /* Breakpoints */
+  --breakpoint-xs: 480px;
+  --breakpoint-sm: 768px;
+  --breakpoint-md: 1024px;
+  --breakpoint-lg: 1280px;
+  --breakpoint-xl: 1536px;
+}
+
+/* ============================================================
+   BASE - Mobile First (0 - 480px)
+   ============================================================ */
+.app-shell {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-height: 100vh;
+  transition: grid-template-columns var(--transition-base);
+}
+
+/* --- Sidebar móvil (off-canvas) --- */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--color-vino-oscuro);
+  color: var(--color-crema);
+  padding: var(--space-4) var(--space-3);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  transform: translateX(-100%);
+  transition: transform var(--transition-base);
+  z-index: 200;
+  box-shadow: 2px 0 12px rgba(0,0,0,0.15);
+}
+
+.app-shell.sidebar-open .sidebar {
+  transform: translateX(0);
+}
+
+/* Scrim (fondo oscuro al abrir sidebar) */
+.sidebar-scrim {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 150;
+  backdrop-filter: blur(2px);
+}
+
+.app-shell.sidebar-open .sidebar-scrim {
+  display: block;
+}
+
+/* Brand */
+.sidebar .brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0 var(--space-2);
+  margin-bottom: var(--space-6);
+  white-space: nowrap;
+}
+
+.sidebar .brand svg {
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.sidebar .brand span {
+  font-family: var(--font-display);
+  font-size: var(--fs-md);
+}
+
+/* Navegación */
+.nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border-radius: var(--radius-sm);
+  color: rgba(250, 246, 238, 0.85);
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-size: var(--fs-sm);
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+.nav-link svg {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.nav-link:hover {
+  background: rgba(250, 246, 238, 0.08);
+  color: #fff;
+}
+
+.nav-link.active {
+  background: var(--color-dorado);
+  color: var(--color-vino-oscuro);
+  font-weight: 600;
+}
+
+.sidebar-footer {
+  border-top: 1px solid rgba(250, 246, 238, 0.15);
+  padding-top: var(--space-4);
+  font-size: var(--fs-xs);
+  color: rgba(250, 246, 238, 0.6);
+  white-space: nowrap;
+}
+
+/* --- Topbar móvil --- */
+.topbar {
+  height: var(--topbar-height);
+  background: #fff;
+  border-bottom: 1px solid var(--color-crema-oscuro);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+
+.topbar .left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+#sidebar-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2);
+  border-radius: var(--radius-sm);
+  color: var(--color-vino);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+#sidebar-toggle:hover {
+  background: var(--color-crema);
+}
+
+.topbar h1 {
+  font-size: var(--fs-sm);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.topbar .right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-xs);
+}
+
+.user-chip .role-badge {
+  background: var(--color-crema);
+  color: var(--color-vino);
+  padding: 2px var(--space-2);
+  border-radius: 999px;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.user-chip .user-name {
+  display: none;
+}
+
+/* --- Contenido móvil --- */
+.content {
+  padding: var(--space-3);
+}
+
+.view {
+  display: none;
+}
+
+.view.active {
+  display: block;
+}
+
+.view-header {
+  margin-bottom: var(--space-4);
+}
+
+.view-header h2 {
+  font-size: var(--fs-lg);
+  margin-bottom: var(--space-1);
+}
+
+.view-header p {
+  color: var(--color-texto-suave);
+  font-size: var(--fs-sm);
+}
+
+/* --- Grid reservas móvil --- */
+.reservations-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-3);
+}
+
+.reservation-card {
+  background: #fff;
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  box-shadow: var(--shadow-sm);
+  border-top: 3px solid var(--color-dorado);
+}
+
+.reservation-card h4 {
+  font-size: var(--fs-md);
+  margin-bottom: var(--space-2);
+}
+
+.reservation-card .meta {
+  font-size: var(--fs-sm);
+  color: var(--color-texto-suave);
+  margin-bottom: var(--space-1);
+}
+
+.reservation-card .card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.reservation-card .card-actions .btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ============================================================
+   TABLETS PEQUEÑAS (481px - 768px)
+   ============================================================ */
+@media (min-width: 481px) {
+  .content {
+    padding: var(--space-4);
+  }
+  
+  .reservations-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .reservation-card .card-actions {
+    flex-direction: row;
+  }
+  
+  .reservation-card .card-actions .btn {
+    width: auto;
+  }
+  
+  .user-chip .user-name {
+    display: inline;
+  }
+  
+  .topbar h1 {
+    font-size: var(--fs-md);
+  }
+}
+
+/* ============================================================
+   TABLETS GRANDES / LAPTOPS PEQUEÑAS (769px - 1024px)
+   ============================================================ */
+@media (min-width: 769px) {
+  /* Sidebar fijo */
+  .sidebar {
+    position: relative;
+    transform: translateX(0);
+    width: var(--sidebar-width);
+    padding: var(--space-5) var(--space-3);
+    box-shadow: none;
+    z-index: auto;
+  }
+  
+  .sidebar-scrim {
+    display: none !important;
+  }
+  
+  .app-shell {
+    grid-template-columns: var(--sidebar-width) 1fr;
+  }
+  
+  .app-shell.sidebar-collapsed {
+    grid-template-columns: var(--sidebar-width-collapsed) 1fr;
+  }
+  
+  .app-shell.sidebar-collapsed .brand span,
+  .app-shell.sidebar-collapsed .nav-link span,
+  .app-shell.sidebar-collapsed .sidebar-footer span {
+    display: none;
+  }
+  
+  .app-shell.sidebar-collapsed .sidebar {
+    width: var(--sidebar-width-collapsed);
+  }
+  
+  .app-shell.sidebar-collapsed .nav-link {
+    justify-content: center;
+  }
+  
+  .app-shell.sidebar-collapsed .nav-link svg {
+    margin: 0;
+  }
+  
+  /* Topbar */
+  .topbar {
+    padding: 0 var(--space-5);
+  }
+  
+  .topbar h1 {
+    font-size: var(--fs-lg);
+  }
+  
+  .user-chip {
+    font-size: var(--fs-sm);
+  }
+  
+  .user-chip .user-name {
+    display: inline;
+  }
+  
+  .content {
+    padding: var(--space-5);
+  }
+  
+  .reservations-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-4);
+  }
+  
+  .view-header h2 {
+    font-size: var(--fs-xl);
+  }
+}
+
+/* ============================================================
+   COMPUTADORAS (1025px - 1280px)
+   ============================================================ */
+@media (min-width: 1025px) {
+  .reservations-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-5);
+  }
+  
+  .content {
+    padding: var(--space-6);
+  }
+  
+  .topbar {
+    padding: 0 var(--space-6);
+  }
+  
+  .sidebar {
+    padding: var(--space-6) var(--space-4);
+  }
+  
+  .reservation-card {
+    padding: var(--space-4);
+  }
+}
+
+/* ============================================================
+   PANTALLAS GRANDES (1281px - 1536px)
+   ============================================================ */
+@media (min-width: 1281px) {
+  .reservations-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+  }
+  
+  .content {
+    padding: var(--space-7);
+    max-width: 1440px;
+    margin: 0 auto;
+  }
+  
+  .topbar {
+    padding: 0 var(--space-7);
+  }
+  
+  .sidebar {
+    padding: var(--space-7) var(--space-5);
+  }
+  
+  .sidebar .brand svg {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .sidebar .brand span {
+    font-size: var(--fs-lg);
+  }
+  
+  .nav-link {
+    font-size: var(--fs-md);
+    padding: var(--space-3) var(--space-4);
+  }
+  
+  .nav-link svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+/* ============================================================
+   PANTALLAS EXTRA GRANDES (1537px en adelante)
+   ============================================================ */
+@media (min-width: 1537px) {
+  :root {
+    --sidebar-width: 300px;
+    --sidebar-width-collapsed: 80px;
+  }
+  
+  .app-shell {
+    grid-template-columns: var(--sidebar-width) 1fr;
+  }
+  
+  .app-shell.sidebar-collapsed {
+    grid-template-columns: var(--sidebar-width-collapsed) 1fr;
+  }
+  
+  .reservations-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+  }
+  
+  .content {
+    padding: var(--space-8);
+    max-width: 1600px;
+    margin: 0 auto;
+  }
+  
+  .topbar {
+    padding: 0 var(--space-8);
+    height: 72px;
+  }
+  
+  .topbar h1 {
+    font-size: var(--fs-xl);
+  }
+  
+  .sidebar .brand svg {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .sidebar .brand span {
+    font-size: var(--fs-xl);
+  }
+  
+  .nav-link {
+    font-size: var(--fs-md);
+    padding: var(--space-4) var(--space-5);
+    gap: var(--space-4);
+  }
+  
+  .nav-link svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .reservation-card {
+    padding: var(--space-5);
+  }
+  
+  .reservation-card h4 {
+    font-size: var(--fs-lg);
+  }
+  
+  .user-chip {
+    font-size: var(--fs-md);
+  }
+}
+
+/* ============================================================
+   AJUSTES PARA ORIENTACIÓN HORIZONTAL EN MÓVILES
+   ============================================================ */
+@media (max-height: 600px) and (orientation: landscape) {
+  .sidebar {
+    padding: var(--space-2) var(--space-3);
+  }
+  
+  .sidebar .brand {
+    margin-bottom: var(--space-3);
+  }
+  
+  .sidebar .brand svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .sidebar .brand span {
+    font-size: var(--fs-sm);
+  }
+  
+  .nav-link {
+    padding: var(--space-2);
+    gap: var(--space-2);
+  }
+  
+  .nav-link svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .sidebar-footer {
+    padding-top: var(--space-2);
+  }
+  
+  .topbar {
+    height: 48px;
+    padding: 0 var(--space-2);
+  }
+  
+  .topbar h1 {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* ============================================================
+   UTILIDADES RESPONSIVE
+   ============================================================ */
+/* Ocultar elementos en móvil */
+.hide-mobile {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .hide-mobile {
+    display: inline;
+  }
+}
+
+/* Mostrar solo en móvil */
+.show-mobile {
+  display: inline;
+}
+
+@media (min-width: 769px) {
+  .show-mobile {
+    display: none;
+  }
+}
+
+/* Ajustes de fuente responsiva */
+@media (max-width: 480px) {
+  .text-responsive {
+    font-size: var(--fs-sm);
+  }
+}
+
+/* Espaciado responsivo */
+@media (max-width: 768px) {
+  .gap-responsive {
+    gap: var(--space-2);
+  }
+}
+
+@media (min-width: 769px) {
+  .gap-responsive {
+    gap: var(--space-4);
+  }
+}
